@@ -22,6 +22,8 @@
 namespace corsim
 {
 
+const double SUBJECTS_SPEED_MULTIPLIER = 1.1;
+
 Simulation::Simulation(int width, int height, std::unique_ptr<Canvas> canvas, std::unique_ptr<StatisticsHandler> sh) : 
     _sim_width{width}, _sim_height{height}, _canvas{std::move(canvas)}, _sh{std::move(sh)} {}
 
@@ -90,6 +92,7 @@ void Simulation::tick()
     if(counter % 30 == 0)
     {
         _sh.get()->communicate_number_infected(counter/30,numberInfected);
+        increase_subjects_speed();
     }
     
 
@@ -168,10 +171,10 @@ void Simulation::subject_collision(Subject& s1, Subject& s2)
         double dx2F = ((2.0*cos(theta1 - phi)) / 2) * cos(phi) + sin(theta2-phi) * cos(phi+M_PI/2.0);
         double dy2F = ((2.0*cos(theta1 - phi)) / 2) * sin(phi) + sin(theta2-phi) * sin(phi+M_PI/2.0);
 
-        s1.set_dx(dx1F);                
-        s1.set_dy(dy1F);                
-        s2.set_dx(dx2F);                
-        s2.set_dy(dy2F);
+        //s1.set_dx(dx1F);
+        //s1.set_dy(dy1F);
+        //s2.set_dx(dx2F);
+        //s2.set_dy(dy2F);
 
         static_collision(s1, s2, false);
     }
@@ -199,6 +202,16 @@ void Simulation::static_collision(Subject& s1, Subject& s2, bool emergency)
         {
             static_collision(s1, s2, true);
         }
+    }
+}
+
+void Simulation::increase_subjects_speed()
+{
+    // Loop door alle subjecten en verhoog hun speed
+    for (int i = 0; i < _subjects.size(); i++)
+    {
+        _subjects[i].set_dx(_subjects[i].dx() * SUBJECTS_SPEED_MULTIPLIER);
+        _subjects[i].set_dy(_subjects[i].dy() * SUBJECTS_SPEED_MULTIPLIER);
     }
 }
 

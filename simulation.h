@@ -42,7 +42,8 @@ class Simulation
         void static_collision(Subject& s1, Subject& s2, bool emergency);
         void tick();
         void draw_to_canvas();
-
+        void increase_subjects_speed();
+        
         std::unique_ptr<Canvas> _canvas;
         std::vector<Subject> _subjects;
         std::unique_ptr<StatisticsHandler> _sh;

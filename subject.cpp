@@ -17,6 +17,7 @@
 #include "subject.h"
 
 #include <math.h>
+#include <stdio.h>
 
 namespace corsim
 {
@@ -53,12 +54,34 @@ double Subject::dy()
 
 void Subject::set_dx(double dx)
 {
-    this->setMoveStrategy->set_dx(dx);
+    // Limiteer x snelheid tot maxspeed
+    double newdx = dx;
+    if (newdx < 0.0 && newdx < -_maxSpeed)
+    {
+        newdx = -_maxSpeed;
+    }
+    else if (newdx > _maxSpeed)
+    {
+        newdx = _maxSpeed;
+    }
+
+    this->setMoveStrategy->set_dx(newdx);
 }
 
 void Subject::set_dy(double dy)
 {
-    this->setMoveStrategy->set_dy(dy);
+    // Limiteer y snelheid tot maxspeed
+    double newdy = dy;
+    if (newdy < 0.0 && newdy < -_maxSpeed)
+    {
+        newdy = -_maxSpeed;
+    }
+    else if (newdy > _maxSpeed)
+    {
+        newdy = _maxSpeed;
+    }
+
+    this->setMoveStrategy->set_dy(newdy);
 }
 
 int Subject::radius()

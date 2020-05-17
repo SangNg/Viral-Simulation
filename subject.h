@@ -26,8 +26,8 @@ namespace corsim
 class Subject
 {
     public:
-        Subject(int x, int y, int radius, bool infected,MovementStrategy* setMoveStrategy) :
-        setMoveStrategy(setMoveStrategy), _x(x), _y(y), _infected(infected), _radius(radius) {};;
+        Subject(int x, int y, int radius, bool infected, MovementStrategy* setMoveStrategy, double maxSpeed) :
+        setMoveStrategy(setMoveStrategy), _x(x), _y(y), _infected(infected), _radius(radius), _maxSpeed(maxSpeed) {};;
         double x();
         double y();
         void set_x(double x);
@@ -43,7 +43,7 @@ class Subject
         double speed();
         MovementStrategy* setMoveStrategy;
     private:
-        double _x = 0,_y = 0, _dx = 0, _dy = 0;
+        double _x = 0,_y = 0, _dx = 0, _dy = 0, _maxSpeed = 0;
         bool _infected = false;
         int _radius = 0;
 };
