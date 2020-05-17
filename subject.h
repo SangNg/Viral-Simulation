@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once 
-
+#include "movement-strategy.h"
 namespace corsim
 {
     
@@ -26,7 +26,8 @@ namespace corsim
 class Subject
 {
     public:
-        Subject(int x, int y, int radius, bool infected);
+        Subject(int x, int y, int radius, bool infected,MovementStrategy* setMoveStrategy) :
+        setMoveStrategy(setMoveStrategy), _x(x), _y(y), _infected(infected), _radius(radius) {};;
         double x();
         double y();
         void set_x(double x);
@@ -40,6 +41,7 @@ class Subject
         void infect();
         double angle();
         double speed();
+        MovementStrategy* setMoveStrategy;
     private:
         double _x = 0,_y = 0, _dx = 0, _dy = 0;
         bool _infected = false;
